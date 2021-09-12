@@ -10,10 +10,6 @@ TOKEN = "YOUR_TOKEN_HERE"
 
 bot = commands.Bot(command_prefix="$", case_insensitive=True)
 
-def s_to_ms(s: Union[str, float]) -> int:
-    return float(s)
-    return float(s) * 1000
-
 def check_valid_question_number_string(content: str) -> bool:
     content = content.lstrip("q")
     return content.isdigit() and 0 < int(content) <= len(jury.questions)
@@ -155,7 +151,7 @@ Do not keep your code and the backticks on the same line.''')
         message = ""
         if judgement.passed:
             message += "All Correct \✔️"
-            message += f"\n\n**Time Considered:** {s_to_ms(judgement.time_taken)} ms"
+            message += f"\n\n**Time Considered:** {float(judgement.time_taken)} ms"
         else:   
             message += f"\❌ Wrong Answer on line {judgement.diff.flod}"  # First line of difference
             message += f"\n\nInput\n```\n{judgement.question['input']}\n```"
