@@ -1,0 +1,12 @@
+{
+    "questions": {
+        "Easy": ["Add Two Numbers", "Subtract Two Numbers"],
+        "Moderate": ["Multiply Two Numbers"],
+        "Difficult": ["Divide Two Numbers"]
+    },
+    "multipliers": {
+        "Easy": 1.25,
+        "Moderate": 1.5,
+        "Difficult": 2
+    }
+}
