@@ -5,7 +5,8 @@ import discord
 from discord import Embed
 from discord.ext import commands
 
-TOKEN = "ODg2MjUwMDIyNDcwMDQ1NzA2.YTy2pw.wqb5lFhu7O8GkG-YL8iAoHjB5MM"
+TOKEN = "YOUR_TOKEN_HERE"
+# Don't use my token, use yours!
 
 bot = commands.Bot(command_prefix="$", case_insensitive=True)
 
