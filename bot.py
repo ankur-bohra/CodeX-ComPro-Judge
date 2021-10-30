@@ -166,7 +166,6 @@ print("Hello, World!")
 ```
 OR upload your file.''')
         code = await bot.wait_for("message", check=check_valid_codeblock_message)
-        print(str(code))
         if len(code.attachments) == 0:
             code = code.content
         else:
