@@ -1,12 +1,12 @@
 {
     "questions": {
-        "Easy": ["Add Two Numbers", "Subtract Two Numbers"],
-        "Moderate": ["Multiply Two Numbers"],
-        "Difficult": ["Divide Two Numbers"]
+        "Easy": ["Factorial", "Fibonacci", "Bit++", "Dominant Case Conversion", "Police Recruits", "Face Detection"],
+        "Moderate": ["Stones on the Table", "Queue at the School", "Tit for Tat", "Definite Game", "Copy-Paste", "Two Arrays and Swaps"],
+        "Difficult": []
     },
-    "multipliers": {
-        "Easy": 1.25,
-        "Moderate": 1.5,
-        "Difficult": 2
+    "penalties": {
+        "Easy": 100,
+        "Moderate": 150,
+        "Difficult": 250
     }
 }
