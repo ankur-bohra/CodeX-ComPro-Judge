@@ -62,6 +62,14 @@ def get_identifier(user) -> str:
         identifier = str(user.id)
     return identifier
 
+async def wait_for_message(context, check=None):
+    def modified_check(message: discord.Message):
+        nonlocal context
+        primary_check = context.author.id == message.author.id and context.channel.id == message.channel.id
+        secondary_check = check(message)
+        return primary_check and secondary_check
+    return await bot.wait_for("message", check=modified_check)
+
 format_time = lambda object: object.strftime('%I:%M:%S %p')
 
 @bot.event
@@ -140,14 +148,14 @@ async def submit(ctx: commands.Context, question_number: str=None, language: str
     # QUESTION NUMBER
     if question_number is None or not check_valid_question_number_string(question_number):
         await ctx.channel.send("What question are you submitting? (q1, 2, q3, etc.)")
-        question_number = await bot.wait_for("message", check=check_valid_question_number_message)
+        question_number = await wait_for_message(ctx, check=check_valid_question_number_message)
         question_number = question_number.content
     question_number = int(question_number.lstrip('q'))
 
     # PROGRAMMING LANGUAGE
     if language is None or not check_valid_language_string(language):
         await ctx.channel.send("What language is your submission in? (\"cpp\", \"c++\", \"py\", \"python\".)")
-        language = await bot.wait_for("message", check=check_valid_language_message)
+        language = await wait_for_message(ctx, check=check_valid_language_message)
         language = language.content
     language = "cpp-clang" if language.lower() in ("c++", "cpp") else "python3"
     
@@ -165,7 +173,7 @@ Output:
 print("Hello, World!")
 ```
 OR upload your file.''')
-        code = await bot.wait_for("message", check=check_valid_codeblock_message)
+        code = await wait_for_message(ctx, check=check_valid_codeblock_message)
         if len(code.attachments) == 0:
             code = code.content
         else:
@@ -224,7 +232,7 @@ async def tests(ctx: commands.Context, question_number: str=None) -> None:
     '''
     if not question_number or not check_valid_question_number_string(question_number):
         await ctx.channel.send("What question do you want to view? (q1, 2, q3, etc.)")
-        question_number = await bot.wait_for("message", check=check_valid_question_number_message)
+        question_number = await wait_for_message(ctx, check=check_valid_question_number_message)
         question_number = question_number.content
     question_number = int(question_number.lstrip('q')) - 1
     question = jury.questions[question_number]
@@ -252,7 +260,7 @@ async def view(ctx: commands.Context, question_number: str=None) -> None:
     '''
     if not question_number or not check_valid_question_number_string(question_number):
         await ctx.channel.send("What question do you want to view? (q1, 2, q3, etc.)")
-        question_number = await bot.wait_for("message", check=check_valid_question_number_message)
+        question_number = await wait_for_message(ctx, check=check_valid_question_number_message)
         question_number = question_number.content
     question_number = int(question_number.lstrip('q'))
     question = jury.questions[question_number-1]
@@ -288,7 +296,7 @@ async def delete(ctx: commands.context, team, question_number):
 
     attempt_time = get_format(judgement["submission_time"])
     ctx.channel.send(f"Do you want to delete Team {team}'s submission for {question_number} at {attempt_time}?")
-    message = bot.wait_for("message", check=lambda msg: msg.content.lower() in ("yes", "no"))
+    message = wait_for_message(ctx, check=lambda msg: msg.content.lower() in ("yes", "no"))
     if message.content.lower() == "yes":
         jury.judgements[team].pop(question_number)
         ctx.channel.send("Question judgement removed.")
