@@ -86,11 +86,9 @@ def get_leaderboard(include_points=True):
 
 	# Flatten and sort
 	total_points = [{"team": team, "points": total_points[team]} for team in total_points]
-	print(total_points)
 	total_points.sort(key=lambda t: round(t["points"], 2), reverse=True)  # Sort by total points
 	if not include_points:
 		total_points = [t["team"] for t in total_points]  # Give a list of the teams only
-	print("\t", total_points)
 	return total_points
 
 def get_first_line_of_difference(correct, wrong):
@@ -140,7 +138,6 @@ def log(team: str, judgement: Dict[str, any]):
 		questions[judgement["question_number"]]["points"][team] = judgement["points"]
 
 def get_judgement(team: str, question_number: int):
-	print(judgements.keys())
 	if team in judgements and question_number in judgements[team]:
 		return judgements[team][question_number]
 	else:

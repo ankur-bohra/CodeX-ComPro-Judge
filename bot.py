@@ -322,6 +322,5 @@ async def intialize_teams(message):
     for role in message.guild.roles:
         if role.name not in jury.judgements and role.name.lower() in ('lotus valley', 'dav public school', 'heritage school', 'gd goenka', 'shalom hills', 'kunskapsskolan', 'dps'):
             jury.judgements[role.name] = {}
-            print("Added", role.name)
 
 bot.run(TOKEN)
