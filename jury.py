@@ -50,7 +50,7 @@ def get_least_execution_time(question_number: int) -> int:
 	least_execution_time = None
 	for team in question["points"]:
 		question_judgement = judgements[team][question_number]
-		execution_time = question_judgement["least_execution_time"]
+		execution_time = question_judgement["execution_time"]
 		if not least_execution_time or execution_time < least_execution_time:
 			least_execution_time = execution_time
 	return least_execution_time
